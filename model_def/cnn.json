@@ -1,0 +1,38 @@
+{
+	"dataset_path" : "../Dataset/fyndDataGray.csv",
+	"test_dataset_path" : "../Dataset/fyndDataGray.csv",
+	"dims" : 200,
+	"output_classes" : 6,
+	"epochs" : 30,
+	"batch_size" : 128,
+	"dataset_size" : 1900,
+	"batches" : 15,
+
+	"conv1_fmaps" : 32,
+	"conv1_ksize" : 2,
+	"conv1_stride" : 1,
+	"conv1_pad" : "valid",
+
+	"conv2_fmaps" : 16,
+	"conv2_ksize" : 2,
+	"conv2_stride" : 1,
+	"conv2_pad" : "valid",
+
+	"conv3_fmaps" : 8,
+	"conv3_ksize" : 2,
+	"conv3_stride" : 1,
+	"conv3_pad" : "valid",
+
+	"conv4_fmaps" : 4,
+	"conv4_ksize" : 2,
+	"conv4_stride" : 1,
+	"conv4_pad" : "valid",
+
+	"fc_dims" : 1280,
+
+	"fc_size1" : 1280,
+	"fc_size2" : 6,
+
+	"model_save_path" : "../Models/cnn.ckpt",
+	"visual_save_path" : "../visual/cnn"
+}
