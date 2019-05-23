@@ -24,10 +24,8 @@ id | view_1 | view_2 | view_3 | view_4 | view_5 | class
 * *Image taken from the original challenge [website](https://blog.gofynd.com/machine-learning-internship-challenge-2019-6b4e9dddb637)*
 
 ## Approach and Network Architecture
-<dl>
-  <dt>Takeaways from dataset</dt>
-  <dd>A personal takeaway from the public dataset is the need for all views in the dataset. Instead of selecting a particular view on which our model should make predictions, we can use the combined information learnt from all the different views so that the classifier can make a better informed decision. Each view can contribute towards the learning of different aspects of the footwear like height, presence of laces, buckles, open ends and so on. A simple justification for this is the difference between the closure types. A <b>zipper</b> footwear can be easily identified from a view containing the zipper itself, the height of the part containing the zipper, absense of hooks, laces and so on. These informations can be extracted from the various views. For instance: </dd>
-</dl>
+### Takeaways from dataset</dt>
+A personal takeaway from the public dataset is the need for all views in the dataset. Instead of selecting a particular view on which our model should make predictions, we can use the combined information learnt from all the different views so that the classifier can make a better informed decision. Each view can contribute towards the learning of different aspects of the footwear like height, presence of laces, buckles, open ends and so on. A simple justification for this is the difference between the closure types. A **zipper** footwear can be easily identified from a view containing the zipper itself, the height of the part containing the zipper, absense of hooks, laces and so on. These informations can be extracted from the various views. For instance: 
 
 *Zipper views*
 
@@ -35,10 +33,59 @@ id | view_1 | view_2 | view_3 | view_4 | view_5 | class
 
 From these two views we can gather necessary informations. From **view 1**, we can conclude the absence of any sorts of lace or buckle. And the **view 2** shows the zipper on the left part of the footwear.
 
-<dl>
-  <dt>Architecture of Model</dt>
-  <dd>Model type - CLDNN<br/>
-  <img src="https://3qeqpr26caki16dnhd19sv6by6v-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/Convolutional-Neural-Network-Long-Short-Term-Memory-Network-Archiecture.png"/><br/>
-    Image source: <a href="https://machinelearningmastery.com/cnn-long-short-term-memory-networks/">here</a><br/>
-  </dd>
-</dl>
+### Architecture of Model
+Model type - CLDNN
+
+<img src="https://3qeqpr26caki16dnhd19sv6by6v-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/Convolutional-Neural-Network-Long-Short-Term-Memory-Network-Archiecture.png" align="left"/>
+<br/>
+
+* Input x containing contextual vectors are passed as input.
+<br/>
+
+* First step is to reduce frequency variation by using **CNN layers**.
+<br/>
+
+* After frequency modeling is complete, we pass the outputs to the **LSTM layers** where temporal learning is done.
+<br/>
+
+* Finally timestep outputs are passed to the Dense layers for higher-order feature representation.
+<br/>
+
+* Output features are evaluated.
+<br/><br/><br/>
+
+Image source: <a href="https://machinelearningmastery.com/cnn-long-short-term-memory-networks/"/>here
+
+## Pre-processing of Data
+* To reduce the variation of input features, all examples are converted into grayscale.
+
+Color | Grayscale
+:----:|:---------:
+<img src="https://github.com/monstahzxz/fyndML/blob/master/images/color.png" height="200" width="200"/> | <img src="https://github.com/monstahzxz/fyndML/blob/master/images/black.png" height="200" width="200"/>
+
+This helps the model to focus only on the closure properties without giving relevance to the colour of the footwear.
+* Dataset dimensions were changed to 200x200
+* Due to the ordering of dataset by classes, shuffling was done to easily get random batches.
+
+## Evaluation
+### Training Set
+Accuracy | Cross Entropy Error
+:-------:|:-------------------:
+<img src="https://github.com/monstahzxz/fyndML/blob/master/images/acc.png" height="200" width="200"/> | <img src="https://github.com/monstahzxz/fyndML/blob/master/images/err.png" height="200" width="200"/>
+### Confusion Matrix
+![](https://github.com/monstahzxz/fyndML/blob/master/images/cm.png)
+**0** - Zipper, **1** - Backstrap, **2** - Slip On, **3** - Lace Up, **4** - Buckle, **5** - Hook&Look
+
+### Train and Test Errors
+Train Error | Test Error
+:----:|:----:
+0.16 | 0.43
+
+## Conclusion
+* The model was able to deliver good performance.
+* Accuracy could be improved if dataset views were consistent. That is,
+  * Each view of examples is properly defined as front/rear/side view in an order.
+  * Background noises were reduced
+* Collecting more data would prove helpful, as it was found to make a difference in the performance of the model.
+* Existing variance problem could be reduced with further regularization.
+* Class imbalances are to be removed by adding sufficient data to each class.
