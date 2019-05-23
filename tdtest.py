@@ -77,40 +77,6 @@ def fc_layers(x_fc):
 	return z2
 
 
-'''def fc_layers(x_fc):
-	w1 = tf.get_variable("w1",[fc_size1,fc_size2],initializer = tf.contrib.layers.xavier_initializer())
-	b1 = tf.get_variable("b1", [fc_size2], initializer = tf.zeros_initializer())
-	w2 = tf.get_variable("w2",[fc_size2,fc_size3],initializer = tf.contrib.layers.xavier_initializer())
-	b2 = tf.get_variable("b2", [fc_size3], initializer = tf.zeros_initializer())
-	w3 = tf.get_variable("w3",[fc_size3,fc_size4],initializer = tf.contrib.layers.xavier_initializer())
-	b3 = tf.get_variable("b3", [fc_size4], initializer = tf.zeros_initializer())
-	w4 = tf.get_variable("w4",[fc_size4,fc_size5],initializer = tf.contrib.layers.xavier_initializer())
-	b4 = tf.get_variable("b4", [fc_size5], initializer = tf.zeros_initializer())
-	w5 = tf.get_variable("w5",[fc_size5,fc_size6],initializer = tf.contrib.layers.xavier_initializer())
-	b5 = tf.get_variable("b5", [fc_size6], initializer = tf.zeros_initializer())
-	w6 = tf.get_variable("w6",[fc_size6,fc_size7],initializer = tf.contrib.layers.xavier_initializer())
-	b6 = tf.get_variable("b6", [fc_size7], initializer = tf.zeros_initializer())
-	w7 = tf.get_variable("w7",[fc_size7,fc_size8],initializer = tf.contrib.layers.xavier_initializer())
-	b7 = tf.get_variable("b7", [fc_size8], initializer = tf.zeros_initializer())
-
-	with tf.name_scope('fc'):	
-		z1 = tf.add(tf.matmul(x_fc,w1),b1)
-		a1 = tf.nn.relu(z1)
-		z2 = tf.add(tf.matmul(a1,w2),b2)
-		a2 = tf.nn.relu(z2)
-		z3 = tf.add(tf.matmul(a2,w3),b3)
-		a3 = tf.nn.relu(z3)
-		z4 = tf.add(tf.matmul(a3,w4),b4)
-		a4 = tf.nn.relu(z4)
-		z5 = tf.add(tf.matmul(a4,w5),b5)
-		a5 = tf.nn.relu(z5)
-		z6 = tf.add(tf.matmul(a5,w6),b6)
-		a6 = tf.nn.relu(z6)
-		z7 = tf.add(tf.matmul(a6,w7),b7)
-
-	return z7'''
-
-
 	
 def model(X, Y):
 	x, y = placeholders()
@@ -153,11 +119,11 @@ def model(X, Y):
 	sess.run(init)
 	
 	##Restore cldnn
-	#saver.restore(sess,'D:/fyndML/Models/cldnn.ckpt')
+	
 
 	##Tensorboard data
 	merged_summary = tf.summary.merge_all()
-	writer = tf.summary.FileWriter('visual/tdtest')
+	
 	writer.add_graph(sess.graph)
 	
 	i = 0
@@ -185,10 +151,10 @@ def model(X, Y):
 
 			if batch % 10 == 0:
 				print('Saving checkpoint...')
-				#saver.save(sess,'D:/fyndML/Models/tdtest.ckpt')
+				
 				print('Done saving!')
 
-		#saver.save(sess,'D:/fyndML/Models/tdtest.ckpt')
+		
 	
 
 
