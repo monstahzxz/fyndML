@@ -1,6 +1,7 @@
 {
 	"dataset_path" : "../mined_dataset/2/final.csv",
 	"test_dataset_path" : "../Dataset/fyndDataGray.csv",
+	"best_model_path" : "../best_model/bigcldnn/bigcldnn.ckpt",
 	"dims" : 200,
 	"output_classes" : 6,
 	"epochs" : 30,

@@ -5,7 +5,7 @@ import os
 import matplotlib.pyplot as plt
 import cv2
 import math
-
+import json
 
 
 def placeholders():
@@ -124,7 +124,7 @@ def model(X, Y):
 	#sess.run(init)
 	
 	##Restore cldnn
-	saver.restore(sess,'D:/fyndML/mined_dataset/2/86%/Models/bigcldnn.ckpt')
+	saver.restore(sess,'D:/fyndML/best_model/bigcldnn/bigcldnn.ckpt')
 
 	e_z1, e_cost = sess.run([z1, cost], feed_dict = {
 				x[0]:X[:,0,:,:],
@@ -257,3 +257,5 @@ if __name__ == '__main__':
 
 	model_save_path = defs['model_save_path']
 	visual_save_path = defs['visual_save_path']
+
+	model(X,Y)

@@ -186,7 +186,10 @@ def model(X, Y, test_X, test_Y):
 					if pred[i] == label[i]:
 						correct += 1
 				e_acc = (correct / len(pred)) * 100
-				maxAcc, maxAccSess =  (e_acc,(epoch, batch)) if e_acc > maxAcc else (maxAcc, maxAccSess)		
+				if e_acc > maxAcc:
+					saver.save(sess,best_model_path)
+				maxAcc, maxAccSess =  (e_acc,(epoch, batch)) if e_acc > maxAcc else (maxAcc, maxAccSess)
+
 				with open('acc.txt','w',encoding='utf-8') as f:
 					f.write(str(maxAcc) + ',' + str(maxAccSess))
 
@@ -224,7 +227,7 @@ def getData(dataset_path):
 
 		if i % 250 == 0:
 			print('Read ex: ' + str(i))				
-			break
+			
 	inFile.close()	
 
 	X = np.asarray(X)
@@ -274,6 +277,7 @@ if __name__ == '__main__':
 
 	dataset_path = defs['dataset_path']
 	test_dataset_path = defs['test_dataset_path']
+	best_model_path = defs['best_model_path']
 	dims = defs['dims'] 
 	output_classes = defs['output_classes']
 	epochs = defs['epochs'] 
