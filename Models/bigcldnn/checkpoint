@@ -1,2 +1,3 @@
-model_checkpoint_path: "D:/fyndML/mined_dataset/2/Models/bigcldnn.ckpt"
-all_model_checkpoint_paths: "D:/fyndML/mined_dataset/2/Models/bigcldnn.ckpt"
+model_checkpoint_path: "bigcldnn.ckpt"
+all_model_checkpoint_paths: "..\\..\\mined_dataset\\2\\Models\\bigcldnn.ckpt"
+all_model_checkpoint_paths: "bigcldnn.ckpt"
