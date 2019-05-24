@@ -9,6 +9,11 @@ import json
 
 
 def placeholders(defs):
+	'''
+	Placeholders for input data. x = [view1, view2, view3, view4, view5]
+								 y = [class]
+	'''
+
 	dims = defs['dims'] 
 	output_classes = defs['output_classes']
 
@@ -22,6 +27,10 @@ def placeholders(defs):
 	return x,y
 
 def conv_layers(x,defs):
+	'''
+	CNN Layer. Hyperparameters defined by definitions file.
+	'''
+
 	conv1_fmaps = defs['conv1_fmaps'] 
 	conv1_ksize = defs['conv1_ksize'] 
 	conv1_stride = defs['conv1_stride']
@@ -65,6 +74,10 @@ def conv_layers(x,defs):
 	return x_fc
 
 def conv_re_layers(x,defs):
+	'''
+	CNN Layer. This is the same layer as above with shared weights.
+	'''
+
 	conv1_fmaps = defs['conv1_fmaps'] 
 	conv1_ksize = defs['conv1_ksize'] 
 	conv1_stride = defs['conv1_stride']
@@ -101,10 +114,18 @@ def conv_re_layers(x,defs):
 
 
 def tie_input_timesteps(xs):
+	'''
+	For stacking all the views to be passed on to the LSTM Layer
+	'''
+	
 	return tf.stack([xi for xi in xs])
 
 
 def lstm_layers(x_fcs_input):
+	'''
+	LSTM Layer.
+	'''
+
 	with tf.variable_scope('lstm1'):
 		lstm_layer = tf.contrib.rnn.LSTMCell(128)
 		outputs, _, _ = tf.nn.static_bidirectional_rnn(lstm_layer, lstm_layer, x_fcs_input, dtype=tf.float32)
@@ -116,6 +137,10 @@ def lstm_layers(x_fcs_input):
 
 
 def fc_layers(x_fc,defs):
+	'''
+	Dense Layer.
+	'''
+
 	fc_dims = defs['fc_dims']
 
 	fc_size1 = defs['fc_size1']
@@ -135,35 +160,48 @@ def fc_layers(x_fc,defs):
 
 
 def model(X, Y, idx, save_path='../Models/bigcldnn/bigcldnn.ckpt', def_path='../model_def/bigcldnn.json'):
+	'''
+	Modeling of CLDNN
+	'''
+
 	with open(def_path,'r') as f:
 		defs = json.load(f)
 	ground_truth = defs['ground_truth']
 
 	out = open('output.csv','w',encoding='utf-8')
+	# Initialising placeholders
 	x, y = placeholders(defs)
 	x_fcs = []
+
+	# Passing inputs to CNN Layers
 	x_fcs.append(conv_layers(x[0],defs))
 	for i_conv in range(4):
 		x_fcs.append(conv_re_layers(x[i_conv + 1],defs))
 
+	#  Stacking all views, example wise
 	with tf.variable_scope('prestack'):
 		x_fcs_tied = tie_input_timesteps(x_fcs)		
 		x_fcs_tied_proper = tf.transpose(x_fcs_tied, perm=[1,0,2])
 		x_fcs_input = tf.unstack(x_fcs_tied_proper, 5, 1)
-		
+	
+	# LSTM Layer	
 	with tf.variable_scope('lstm'):	
 		x_fcs_output = tf.transpose(lstm_layers(x_fcs_input), perm=[1,0,2])
 		x_fcs_output_reshaped = tf.reshape(x_fcs_output,[-1,5*256])
 
+	# Final layer features
 	z1 = fc_layers(x_fcs_output_reshaped,defs)
 	
+	# Cost is set as Cross Entropy Error (Softmax) (During training)
 	with tf.variable_scope('cost'):
 		cost = tf.math.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=z1,labels=y,name='loss'))
 
+	# Accuracy of the model on train data (During training)
 	with tf.variable_scope('accuracy'):	
 		equality = tf.equal(tf.argmax(z1, 1), tf.argmax(y, 1))
 		acc = tf.reduce_mean(tf.cast(equality, tf.float32))
 
+	# Optimisation using Adam Optimizer
 	with tf.variable_scope('optimiser'):	
 		optimiser = tf.train.AdamOptimizer().minimize(cost)
 
@@ -205,14 +243,6 @@ def model(X, Y, idx, save_path='../Models/bigcldnn/bigcldnn.ckpt', def_path='../
 
 	print('Accuracy = ' + str(correct/len(pred) * 100) + '%')	
 	print('Error = ' + str(e_cost))		
-	'''for key in ground_truth:
-		if ground_truth[key] == pred:
-			print('Pred: ' + key)
-			break
-	for key in ground_truth:
-		if ground_truth[key] == label:
-			print('Label: ' + key)
-			break'''
 
 	conf_mat = np.zeros((6,6))
 
