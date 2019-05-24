@@ -79,7 +79,7 @@ Accuracy | Cross Entropy Error
 ### Train and Test Errors
 Train Error | Test Error
 :----:|:----:
-0.16 | 0.43
+0.16 | 0.76
 
 ## Conclusion
 * The model was able to deliver good performance.

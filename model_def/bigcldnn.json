@@ -1,7 +1,18 @@
 {
 	"dataset_path" : "../mined_dataset/2/final.csv",
 	"test_dataset_path" : "../Dataset/fyndDataGray.csv",
+	"model_path" : "./Models/bigcldnn/bigcldnn.ckpt",
+	"def_path" : "./model_def/bigcldnn.json",
 	"best_model_path" : "../best_model/bigcldnn/bigcldnn.ckpt",
+	"ground_truth" :
+					{
+						"zipper" : 0,
+						"backstrap" : 1,
+						"slip_on" : 2,
+						"lace_up" : 3,
+						"buckle" : 4,
+						"hook&look" : 5
+					},
 	"dims" : 200,
 	"output_classes" : 6,
 	"epochs" : 30,

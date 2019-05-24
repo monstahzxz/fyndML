@@ -8,16 +8,10 @@ import cv2
 #def model(X, Y):
 
 
-
-
-
-
-if __name__ == '__main__':
-	dataset_path = os.getcwd() + '/Dataset/fyndData.csv'
-	dims = (200,200)
-
+def makeGray(dataset_path, save_path):
+	print('Converting to grayscale...')
 	f = open(dataset_path,'r',encoding='utf-8')
-	out = open('./Dataset/fyndDataColor.csv','w',encoding='utf-8')
+	out = open(save_path,'w',encoding='utf-8')
 	i = 0
 	X = []
 	for line in f:
@@ -37,10 +31,12 @@ if __name__ == '__main__':
 		test = (columns[0],img_grays,columns[-1])
 		X.append(test)
 		if i % 100 == 0:
-			print(str(i) + ' done')
+			print('Example ' + str(i) + ' done')
 
+	print('Shuffling data')
 	np.random.shuffle(X)
 
+	print('Writing to csv..')
 	for i in range(len(X)):
 		out.write(X[i][0] + ',')
 		for img in X[i][1]:
@@ -48,7 +44,14 @@ if __name__ == '__main__':
 			str_img_resized = [str(pix) for pix in img_resized_flattened]
 			images = " ".join(str_img_resized) + ','
 			out.write(images)
-		out.write(X[i][-1] + '\n')	
+		out.write(X[i][-1] + '\n')
+		if (i + 1) % 100 == 0:
+			print('Completd writing example ' + str(i + 1) + ' to file')	
 
 	print('Done.')  
-		
+
+
+if __name__ == '__main__':
+	dataset_path = os.getcwd() + '/Dataset/fyndData.csv'
+	dims = (200,200)
+	save_path = './Dataset/fyndDataColor.csv'
