@@ -67,6 +67,32 @@ This helps the model to focus only on the closure properties without giving rele
 * Dataset dimensions were changed to 200x200
 * Due to the ordering of dataset by classes, shuffling was done to easily get random batches.
 
+## Final Script to be Run
+**Input CSV**
+
+img_id | view_1 URL | view_2 URL | view_3 URL | view_4 URL | view_5 URL | class
+:---:|:---:|:---:|:---:|:---:|:---:|:---:
+sas2z2147z.png | http://images.com/img1.png | http://images.com/img2.png | http://images.com/img3.png | http://images.com/img4.png | http://images.com/img5.png | Buckle
+
+*URLs are for illustration only*
+
+**Execute**
+```sh
+py final_script.py URLS.csv 0
+```
+Argument 1 - CSV with image URLs
+Argument 2 - 0 (URLs), 1 (Flattened RGB images (200x200))
+
+**Output**
+
+output.csv with format
+
+imd_id | Predicted class
+:----:|:----:
+sas2z2147z.png | Buckle
+
+**NOTE**: *Also outputs accuracy, cross entropy loss and confusion matrix to console for the given test data*
+
 ## Evaluation
 ### Training Set
 Accuracy | Cross Entropy Error
