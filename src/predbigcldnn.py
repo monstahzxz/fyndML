@@ -236,8 +236,8 @@ def getData(dataset_path,defs):
 	output_classes = defs['output_classes']
 
 	inFile = open(dataset_path,'r',encoding='utf-8')
-	for it in range(1900):
-		inFile.readline()
+	'''for it in range(1900):
+		inFile.readline()'''
 
 	for line in inFile:
 		i += 1
