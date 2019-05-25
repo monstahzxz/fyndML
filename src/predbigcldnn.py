@@ -237,7 +237,7 @@ def model(X, Y, idx, save_path='../Models/bigcldnn/bigcldnn.ckpt', def_path='../
 			if ground_truth[key] == pred[i]:
 				classx = key
 				break
-		out.write(str(idx[i]) + ',' + str(classx))
+		out.write(str(idx[i]) + ',' + str(classx) + '\n')
 		if pred[i] == label[i]:
 			correct += 1
 
