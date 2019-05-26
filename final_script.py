@@ -28,6 +28,7 @@ if __name__ == '__main__':
 			makeGray('pre.csv','gray.csv')
 		# For CSVs having images
 		else:
+			print('Ensure that you are passing on BGR flattened images, and not RGB (Conversion is made from BGR to grayscale, if RGB is passed, results will be wrong)')
 			makeGray(dataset_path,'gray.csv')
 		
 		# Reading data in-memory

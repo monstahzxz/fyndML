@@ -68,6 +68,12 @@ This helps the model to focus only on the closure properties without giving rele
 * Due to the ordering of dataset by classes, shuffling was done to easily get random batches.
 
 ## Final Script to be Run
+**Pre-Requisites**
+* Python 3.x
+* Tensorflow
+* Numpy
+* OpenCV (cv2)
+
 **Input CSV**
 
 img_id | view_1 URL | view_2 URL | view_3 URL | view_4 URL | view_5 URL | class
@@ -80,8 +86,8 @@ sas2z2147z.png | http://images.com/img1.png | http://images.com/img2.png | http:
 ```sh
 py final_script.py URLS.csv 0
 ```
-Argument 1 - CSV with image URLs
-Argument 2 - 0 (URLs), 1 (Flattened RGB images (200x200))
+Argument 1 - CSV with image URLs,
+Argument 2 - 0 (URLs), 1 (Flattened BGR images (200x200))
 
 **Output**
 

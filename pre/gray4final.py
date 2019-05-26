@@ -46,7 +46,7 @@ def makeGray(dataset_path, save_path):
 			out.write(images)
 		out.write(X[i][-1] + '\n')
 		if (i + 1) % 100 == 0:
-			print('Completd writing example ' + str(i + 1) + ' to file')	
+			print('Completed writing example ' + str(i + 1) + ' to file')	
 
 	print('Done.')  
 
