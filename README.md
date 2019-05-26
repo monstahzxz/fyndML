@@ -86,7 +86,7 @@ sas2z2147z.png | http://images.com/img1.png | http://images.com/img2.png | http:
 ```sh
 py final_script.py URLS.csv 0
 ```
-Argument 1 - CSV with image URLs (**recommended**) or CSV with BGR images,
+Argument 1 - CSV with image URLs (**recommended**) or CSV with BGR images<br/>
 Argument 2 - 0 (URLs), 1 (Flattened BGR images (200x200))
 
 **Output**
